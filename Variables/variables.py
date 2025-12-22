@@ -1,2 +1,2 @@
-p = "test"
-print(p)
+test1 = "10.5"
+print(int(test1))
