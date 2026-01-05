@@ -1,6 +1,6 @@
 # 5. Verifică dacă un număr este par sau impar.
 number_of_attempts = 0
-while True and number_of_attempts < 3:
+while number_of_attempts < 3:
     try:
         number = int(input("Introdu un numar: "))
         print("Numarul este par" if not number % 2 else "Numarul este impar")

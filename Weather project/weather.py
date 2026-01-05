@@ -4,7 +4,6 @@ import requests
 api_key = os.getenv("OPENWEATHER_API_KEY")
 API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
-
 def get_weather(city: str, api_key: str, units: str = "metric") -> dict:
     params = {
         "q": city,

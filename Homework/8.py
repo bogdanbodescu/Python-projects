@@ -1,6 +1,6 @@
 # 8. Primește un număr și afișează dacă este pozitiv, negativ sau zero.
 number_of_attempts = 0
-while True and number_of_attempts < 3:
+while number_of_attempts < 3:
     try:
         number = int(input("Introdu un numar: "))
         if number > 0:
