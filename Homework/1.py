@@ -1,11 +1,5 @@
-# Încălzire (1-10):
+
 # 1. Creează două variabile cu valori numerice și afișează suma lor.
-# 2. Afișează produsul a două numere introduse de la tastatură.
-# 3. Primește un nume de la tastatură și afișează-l cu litere mari.
-# 4. Afișează lungimea unui string introdus de la tastatură.
-# 5. Verifică dacă un număr este par sau impar.
-# 6. Primește un text și un caracter, afișează de câte ori apare caracterul în text.
-# 7. Afișează ultimul caracter dintr-un string introdus de la tastatură.
 # 8. Primește un număr și afișează dacă este pozitiv, negativ sau zero.
 # 9. Afișează toate caracterele unui string, câte unul pe linie.
 # 10. Primește două numere și afișează cel mai mare dintre ele.
@@ -36,3 +30,7 @@
 # 31. Fizz Buzz: Primește un număr n și afișează numerele de la 1 la n. Pentru multiplii de 3, afișează "Fizz", pentru multiplii de 5, afișează "Buzz", iar pentru multiplii de ambele, afișează "FizzBuzz".
 # 32. Primește un text și afișează-l cu fiecare cuvânt inversat, dar în aceeași ordine. (Exemplu: "Ana are mere" -> "anA era erem")
 # 33. Primește un text care contine o insiruire de numere și afișează media lor. (Exemplu: "1,2,3,4,5,10" -> 25/6 = 4.1666)
+
+nr1 = 5
+nr2 = 1234
+print(nr1 + nr2)
