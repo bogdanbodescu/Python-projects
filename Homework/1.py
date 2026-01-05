@@ -1,8 +1,8 @@
 
 # 1. Creează două variabile cu valori numerice și afișează suma lor.
-# 8. Primește un număr și afișează dacă este pozitiv, negativ sau zero.
-# 9. Afișează toate caracterele unui string, câte unul pe linie.
-# 10. Primește două numere și afișează cel mai mare dintre ele.
+
+
+
 
 # Exerciții pentru oameni incalziti (11-30):
 # 11. Primește trei numere și afișează cel mai mic dintre ele.
