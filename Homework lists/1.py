@@ -20,4 +20,5 @@ while True:
         power *= 2
     while power <= end:
         print(power)
-        power *= 2      
+        power *= 2
+    break           
