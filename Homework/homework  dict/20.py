@@ -4,7 +4,7 @@ text = "Ana are 12 ani, Ion are 15 ani, Maria are 12 ani, George are 15 ani, Ele
 frequency = {}
 
 for char in text.lower():
-    if char.isalpha():           # verifică dacă este literă
+    if char.isalpha():           
         if char in frequency:
             frequency[char] += 1
         else:
