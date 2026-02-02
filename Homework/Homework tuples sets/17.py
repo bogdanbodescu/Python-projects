@@ -18,5 +18,7 @@ def verifica_paranteze(expresie):
                 return False
             heap.pop()
     return len(heap) == 0
+
+
 print(verifica_paranteze(expresie1))  # Ar trebui să returneze True
 print(verifica_paranteze(expresie2))  # Ar trebui să returneze False
