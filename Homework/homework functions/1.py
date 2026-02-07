@@ -3,3 +3,4 @@ def greet(name):
     print(f"Salut, {name}!")
 
 greet("Alice")
+
