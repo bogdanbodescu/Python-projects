@@ -50,8 +50,6 @@ def exista_elev(elevi, nume, prenume):
             return True
     return False
 
-# ---------- PERSISTENTA ----------
-
 def incarca_elevi():
     elevi = []
     try:
@@ -95,7 +93,6 @@ def salveaza_elevi(elevi):
             linie = f"{e['Nume']}|{e['Prenume']}|{e['Nota_romana']}|{e['Nota_matematica']}|{e['Nota_engleza']}\n"
             f.write(linie)
 
-# ---------- OPERATII ----------
 
 def citeste_nume_prenume():
     print("Va rugam introduceti datele despre elev")
@@ -303,9 +300,6 @@ def print_options():
 # ---------- MAIN ----------
 
 elevi = incarca_elevi()
-
-# daca nu exista fisier sau e gol, poti porni cu lista goala
-# (daca vrei seed initial, poti adauga aici manual elevi si apoi salveaza_elevi(elevi))
 
 while True:
     print_options()
