@@ -1,0 +1,56 @@
+[
+    {
+        "cnp": "1960523456789",
+        "nume": "Popescu",
+        "prenume": "Ion",
+        "varsta": 28,
+        "salariu": 5000.0,
+        "departament": "IT",
+        "senioritate": "mid"
+    },
+    {
+        "cnp": "2950312456781",
+        "nume": "Ionescu",
+        "prenume": "Maria",
+        "varsta": 35,
+        "salariu": 8500.0,
+        "departament": "IT",
+        "senioritate": "senior"
+    },
+    {
+        "cnp": "1981123456782",
+        "nume": "Georgescu",
+        "prenume": "Andrei",
+        "varsta": 24,
+        "salariu": 4200.0,
+        "departament": "HR",
+        "senioritate": "junior"
+    },
+    {
+        "cnp": "1970809456783",
+        "nume": "Dumitrescu",
+        "prenume": "Elena",
+        "varsta": 42,
+        "salariu": 7300.0,
+        "departament": "Financiar",
+        "senioritate": "senior"
+    },
+    {
+        "cnp": "2990101456784",
+        "nume": "Marin",
+        "prenume": "Alex",
+        "varsta": 26,
+        "salariu": 4600.0,
+        "departament": "Marketing",
+        "senioritate": "mid"
+    },
+    {
+        "cnp": "1980603456785",
+        "nume": "Stan",
+        "prenume": "Cristina",
+        "varsta": 31,
+        "salariu": 4050.0,
+        "departament": "HR",
+        "senioritate": "junior"
+    }
+]
