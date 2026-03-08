@@ -22,9 +22,9 @@
         "nume": "Georgescu",
         "prenume": "Andrei",
         "varsta": 24,
-        "salariu": 4200.0,
-        "departament": "HR",
-        "senioritate": "junior"
+        "salariu": 4300.0,
+        "departament": "IT",
+        "senioritate": "mid"
     },
     {
         "cnp": "1970809456783",
@@ -51,6 +51,24 @@
         "varsta": 31,
         "salariu": 4050.0,
         "departament": "HR",
+        "senioritate": "junior"
+    },
+    {
+        "nume": "Dan",
+        "prenume": "Ana",
+        "cnp": "1234567891234",
+        "varsta": 28,
+        "departament": "HR",
+        "salariu": 9000.0,
+        "senioritate": "senior"
+    },
+    {
+        "nume": "Po",
+        "prenume": "Po",
+        "cnp": "1111111111111",
+        "varsta": 100,
+        "departament": "HR",
+        "salariu": 5400.0,
         "senioritate": "junior"
     }
 ]
