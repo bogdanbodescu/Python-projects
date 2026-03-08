@@ -63,12 +63,12 @@
         "senioritate": "senior"
     },
     {
-        "nume": "Po",
-        "prenume": "Po",
+        "nume": "Yu",
+        "prenume": "Nang",
         "cnp": "1111111111111",
-        "varsta": 100,
+        "varsta": 40,
         "departament": "HR",
-        "salariu": 5400.0,
-        "senioritate": "junior"
+        "salariu": 5600.0,
+        "senioritate": "mid"
     }
 ]
