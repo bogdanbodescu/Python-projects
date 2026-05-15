@@ -11,7 +11,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
-from werkzeug.wrappers import Response
+from flask import Response
 
 
 app = Flask(__name__)
