@@ -1,149 +1,132 @@
 # 💸 SpendWise
 
-SpendWise is a personal expense tracking web application built with **Python**, **Flask**, **SQLAlchemy**, **SQLite**, **Jinja2**, **TailwindCSS**, and **Chart.js**.
+SpendWise is a modern expense tracking web application built with Flask, SQLAlchemy, TailwindCSS, and Chart.js.
 
-The application helps users manage and visualize their expenses through an intuitive dashboard interface.
-
----
-
-# ✨ Features
-
-## 📌 Expense Management (CRUD)
-
-- ➕ Create expenses
-- 📖 View all expenses
-- ✏️ Edit existing expenses
-- ❌ Delete expenses
+The application allows users to:
+- Add expenses
+- Edit expenses
+- Delete expenses
+- Filter expenses by date and category
+- Export filtered expenses to CSV
+- Visualize spending data using charts
 
 ---
 
-## 🔍 Filtering System
+# 🚀 Features
 
-Users can filter expenses by:
+## ✅ Expense Management
+- Add new expenses
+- Edit existing expenses
+- Delete expenses
 
-- 📅 Start date
-- 📅 End date
-- 🗂️ Category
+## ✅ Filtering System
+Filter expenses by:
+- Start date
+- End date
+- Category
 
----
+## ✅ CSV Export
+Export filtered expense data into a CSV file.
 
-## 📊 Charts & Analytics
-
-- 🥧 Pie chart for expenses by category
-- 📈 Daily spending chart
-
----
-
-## 📁 CSV Export
-
-- Export filtered expenses to CSV files
-
----
+## ✅ Data Visualization
+Interactive charts powered by Chart.js:
+- Pie chart for category distribution
+- Bar chart for daily spending
 
 ## ✅ Validation & Error Handling
-
-- Positive amount validation
 - Date validation
+- Positive amount validation
 - Category validation
-- Required field validation
-- Flash success/error messages
+- Flash messages for errors/success
+
+## ✅ Clean Architecture
+The project is modularized using:
+- routes.py
+- services.py
+- models.py
+- extensions.py
 
 ---
 
 # 🛠️ Technologies Used
 
-## Backend
-
 - Python 3
 - Flask
 - Flask-SQLAlchemy
-- SQLAlchemy
 - SQLite
-
-## Frontend
-
-- HTML5
 - TailwindCSS
-- Jinja2
 - Chart.js
 
 ---
 
-# 📂 Project Structure
+# 📁 Project Structure
 
 ```text
-spendwise/
-│
-├── static/
-│
-├── templates/
-│   ├── base.html
-│   ├── index.html
-│   └── edit.html
+SpendWise/
 │
 ├── app.py
+├── routes.py
+├── services.py
+├── models.py
+├── extensions.py
 ├── requirements.txt
 ├── README.md
-└── spendwise.db
+│
+├── instance/
+│   └── spendwise.db
+│
+└── templates/
+    ├── base.html
+    ├── index.html
+    └── edit.html
 ```
 
 ---
 
 # ⚙️ Installation
 
-## 1️⃣ Clone the repository
+## 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/spendwise.git
+git clone <your-repository-url>
+cd SpendWise
 ```
 
----
-
-## 2️⃣ Navigate to the project folder
-
-```bash
-cd spendwise
-```
-
----
-
-## 3️⃣ Create a virtual environment
-
-### Windows
+## 2. Create virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
----
-
-## 4️⃣ Activate the virtual environment
+## 3. Activate virtual environment
 
 ### Windows
-
 ```bash
 .venv\Scripts\activate
 ```
 
----
-
-## 5️⃣ Install dependencies
-
+### Linux / macOS
 ```bash
-pip install flask flask-sqlalchemy
+source .venv/bin/activate
 ```
 
----
+## 4. Install dependencies
 
-# ▶️ Running the Application
+```bash
+pip install -r requirements.txt
+```
 
-Start the Flask development server:
+## 5. Run the application
 
 ```bash
 python app.py
 ```
 
-Open your browser and access:
+---
+
+# 🌐 Access the App
+
+Open your browser and go to:
 
 ```text
 http://127.0.0.1:5000
@@ -151,96 +134,42 @@ http://127.0.0.1:5000
 
 ---
 
-# 🗄️ Database
-
-The application uses **SQLite** for storing expense data.
-
-Database file:
+# 📦 Requirements
 
 ```text
-spendwise.db
+Flask
+Flask-SQLAlchemy
+SQLAlchemy
+Werkzeug
 ```
 
-The database and tables are automatically created when the application starts.
+---
+
+# 📊 Charts
+
+SpendWise includes:
+- Expense distribution by category
+- Daily spending visualization
+
+Powered by Chart.js.
 
 ---
 
-# 📤 CSV Export
+# 🧠 Learning Goals
 
-SpendWise supports exporting filtered expenses as CSV files.
-
-The exported file includes:
-
-- Description
-- Amount
-- Category
-- Date
-
----
-
-# 🖼️ Application Pages
-
-## 🏠 Dashboard
-
-Features included:
-
-- Expense table
-- Filtering system
-- Expense statistics
-- Charts
-- Total expenses
-- CSV export
-
----
-
-## ✏️ Edit Expense Page
-
-Allows users to:
-
-- Modify expense information
-- Validate input fields
-- Save changes
-
----
-
-# 🚀 Future Improvements
-
-Possible future features:
-
-- 🔐 User authentication
-- 💰 Monthly budgets
-- 🔁 Recurring expenses
-- 🌙 Dark/light mode switch
-- 🔎 Expense search
-- 📊 Advanced sorting
-- 📄 PDF reports
-- 📱 Responsive mobile improvements
-- 🐳 Docker support
-
----
-
-# 🎯 Learning Objectives
-
-This project was built to practice:
-
+This project demonstrates:
 - Flask routing
 - SQLAlchemy ORM
 - CRUD operations
-- Database filtering
+- Jinja templating
 - Form validation
-- Jinja2 templating
-- Data visualization with Chart.js
-- CSV export functionality
-- Full-stack web development fundamentals
+- Type hinting
+- Modular project structure
+- CSV exporting
+- Frontend integration with TailwindCSS and Chart.js
 
 ---
 
 # 👨‍💻 Author
 
-**Bogdan Bodescu**
-
----
-
-# 📜 License
-
-This project was created for educational purposes.
+Created by Bogdan Bodescu.
