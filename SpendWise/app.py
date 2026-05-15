@@ -6,7 +6,7 @@ from routes import register_routes
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///spendwise.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///instance/spendwise.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "my_secret_key"
 
