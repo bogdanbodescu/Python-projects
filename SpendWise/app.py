@@ -1,6 +1,14 @@
 from datetime import datetime, date
 
-from flask import Flask, flash, make_response, redirect, render_template, request, url_for
+from flask import (
+    Flask,
+    flash,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from werkzeug.wrappers import Response
@@ -25,11 +33,22 @@ CATEGORIES: list[str] = [
 
 
 class Expense(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(120), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    date = db.Column(db.Date, default=date.today)
+    """
+    Database model representing a single expense entry.
+
+    Attributes:
+        id: Unique identifier for the expense.
+        description: Short description of the expense.
+        amount: Expense amount in currency units.
+        category: Expense category.
+        date: Date when the expense occurred.
+    """
+
+    id: int = db.Column(db.Integer, primary_key=True)
+    description: str = db.Column(db.String(120), nullable=False)
+    amount: float = db.Column(db.Float, nullable=False)
+    category: str = db.Column(db.String(50), nullable=False)
+    date: date = db.Column(db.Date, default=date.today)
 
 
 with app.app_context():
@@ -37,7 +56,15 @@ with app.app_context():
 
 
 def parse_date_or_none(date_string: str) -> date | None:
-    """Convert a YYYY-MM-DD string to a date object, or return None if invalid."""
+    """
+    Convert a string in YYYY-MM-DD format into a date object.
+
+    Args:
+        date_string: Date string provided by the user.
+
+    Returns:
+        A date object if parsing succeeds, otherwise None.
+    """
     if not date_string:
         return None
 
@@ -49,14 +76,30 @@ def parse_date_or_none(date_string: str) -> date | None:
 
 @app.route("/")
 def index() -> str:
-    """Render the dashboard with filtered expenses, totals and chart data."""
+    """
+    Render the main dashboard page.
+
+    The route:
+    - Reads filtering parameters from the request.
+    - Validates dates.
+    - Filters expenses.
+    - Calculates totals and chart data.
+    - Renders the dashboard template.
+
+    Returns:
+        Rendered HTML dashboard page.
+    """
+
+    # Read and sanitize filter values
     start_str: str = request.args.get("start_date", "").strip()
     end_str: str = request.args.get("end_date", "").strip()
     selected_category: str = request.args.get("category", "").strip()
 
+    # Parse dates safely
     start_date: date | None = parse_date_or_none(start_str)
     end_date: date | None = parse_date_or_none(end_str)
 
+    # Validate date inputs
     if start_str and not start_date:
         flash("Invalid start date format. Please use YYYY-MM-DD.", "error")
 
@@ -65,11 +108,13 @@ def index() -> str:
 
     if start_date and end_date and start_date > end_date:
         flash("Start date cannot be after end date.", "error")
+
         start_date = None
         end_date = None
         start_str = ""
         end_str = ""
 
+    # Build base query
     query = Expense.query
 
     if start_date:
@@ -81,16 +126,19 @@ def index() -> str:
     if selected_category and selected_category in CATEGORIES:
         query = query.filter(Expense.category == selected_category)
 
+    # Fetch expenses
     all_expenses: list[Expense] = query.order_by(
         Expense.date.desc(),
-        Expense.id.desc()
+        Expense.id.desc(),
     ).all()
 
+    # Calculate total amount
     total_amount: float = sum(expense.amount for expense in all_expenses)
 
+    # Category totals for pie chart
     category_query = db.session.query(
         Expense.category,
-        func.sum(Expense.amount)
+        func.sum(Expense.amount),
     )
 
     if start_date:
@@ -100,7 +148,9 @@ def index() -> str:
         category_query = category_query.filter(Expense.date <= end_date)
 
     if selected_category and selected_category in CATEGORIES:
-        category_query = category_query.filter(Expense.category == selected_category)
+        category_query = category_query.filter(
+            Expense.category == selected_category
+        )
 
     category_rows = category_query.group_by(Expense.category).all()
 
@@ -109,12 +159,14 @@ def index() -> str:
     ]
 
     category_values: list[float] = [
-        round(float(total or 0), 2) for category, total in category_rows
+        round(float(total or 0), 2)
+        for category, total in category_rows
     ]
 
+    # Daily totals for line chart
     daily_query = db.session.query(
         Expense.date,
-        func.sum(Expense.amount)
+        func.sum(Expense.amount),
     )
 
     if start_date:
@@ -124,16 +176,24 @@ def index() -> str:
         daily_query = daily_query.filter(Expense.date <= end_date)
 
     if selected_category and selected_category in CATEGORIES:
-        daily_query = daily_query.filter(Expense.category == selected_category)
+        daily_query = daily_query.filter(
+            Expense.category == selected_category
+        )
 
-    daily_rows = daily_query.group_by(Expense.date).order_by(Expense.date).all()
+    daily_rows = daily_query.group_by(
+        Expense.date
+    ).order_by(
+        Expense.date
+    ).all()
 
     daily_labels: list[str] = [
-        day.isoformat() for day, total in daily_rows
+        day.isoformat()
+        for day, total in daily_rows
     ]
 
     daily_values: list[float] = [
-        round(float(total or 0), 2) for day, total in daily_rows
+        round(float(total or 0), 2)
+        for day, total in daily_rows
     ]
 
     return render_template(
@@ -154,20 +214,32 @@ def index() -> str:
 
 @app.route("/add_expense", methods=["POST"])
 def add_expense() -> Response:
-    """Create a new expense after validating form data."""
+    """
+    Create a new expense after validating user input.
+
+    Returns:
+        Redirect response to the dashboard page.
+    """
+
     description: str = (request.form["description"] or "").strip()
     amount_str: str = (request.form["amount"] or "").strip()
     category: str = (request.form["category"] or "").strip()
     expense_date: str = (request.form["date"] or "").strip()
 
+    # Validate required fields
     if not description or not amount_str or not category or not expense_date:
-        flash("All fields are required! Please fill in all fields.", "error")
+        flash(
+            "All fields are required! Please fill in all fields.",
+            "error",
+        )
         return redirect(url_for("index"))
 
+    # Validate category
     if category not in CATEGORIES:
         flash("Invalid category selected.", "error")
         return redirect(url_for("index"))
 
+    # Validate amount
     try:
         amount: float = float(amount_str)
 
@@ -176,15 +248,23 @@ def add_expense() -> Response:
             return redirect(url_for("index"))
 
     except ValueError:
-        flash("Invalid amount. Please enter a valid positive number.", "error")
+        flash(
+            "Invalid amount. Please enter a valid positive number.",
+            "error",
+        )
         return redirect(url_for("index"))
 
+    # Validate date
     date_parsed: date | None = parse_date_or_none(expense_date)
 
     if not date_parsed:
-        flash("Invalid date format. Please use YYYY-MM-DD.", "error")
+        flash(
+            "Invalid date format. Please use YYYY-MM-DD.",
+            "error",
+        )
         return redirect(url_for("index"))
 
+    # Create expense
     expense = Expense(
         description=description,
         amount=amount,
@@ -196,30 +276,49 @@ def add_expense() -> Response:
     db.session.commit()
 
     flash("Expense added successfully!", "success")
+
     return redirect(url_for("index"))
 
 
 @app.route("/delete_expense/<int:expense_id>", methods=["POST"])
 def delete_expense(expense_id: int) -> Response:
-    """Delete an existing expense by ID."""
+    """
+    Delete an expense by its ID.
+
+    Args:
+        expense_id: ID of the expense to delete.
+
+    Returns:
+        Redirect response to the dashboard page.
+    """
+
     expense: Expense = Expense.query.get_or_404(expense_id)
 
     db.session.delete(expense)
     db.session.commit()
 
     flash("Expense deleted successfully!", "success")
+
     return redirect(url_for("index"))
 
 
 @app.route("/export_csv")
 def export_csv() -> Response:
-    """Export filtered expenses as a CSV file."""
+    """
+    Export filtered expenses as a CSV file.
+
+    Returns:
+        CSV file response containing filtered expenses.
+    """
+
     start_date: date | None = parse_date_or_none(
         request.args.get("start_date", "").strip()
     )
+
     end_date: date | None = parse_date_or_none(
         request.args.get("end_date", "").strip()
     )
+
     selected_category: str = request.args.get("category", "").strip()
 
     query = Expense.query
@@ -235,10 +334,12 @@ def export_csv() -> Response:
 
     expenses: list[Expense] = query.order_by(
         Expense.date.desc(),
-        Expense.id.desc()
+        Expense.id.desc(),
     ).all()
 
-    lines: list[str] = ["Description,Amount,Category,Date\n"]
+    lines: list[str] = [
+        "Description,Amount,Category,Date\n"
+    ]
 
     for expense in expenses:
         lines.append(
@@ -251,7 +352,11 @@ def export_csv() -> Response:
     csv_data: str = "".join(lines)
 
     response = make_response(csv_data)
-    response.headers["Content-Disposition"] = "attachment; filename=expenses.csv"
+
+    response.headers[
+        "Content-Disposition"
+    ] = "attachment; filename=expenses.csv"
+
     response.headers["Content-Type"] = "text/csv"
 
     return response
@@ -259,40 +364,103 @@ def export_csv() -> Response:
 
 @app.route("/edit/<int:expense_id>", methods=["GET", "POST"])
 def edit_expense(expense_id: int) -> str | Response:
-    """Edit an existing expense."""
+    """
+    Edit an existing expense.
+
+    Args:
+        expense_id: ID of the expense to edit.
+
+    Returns:
+        Rendered edit page or redirect response.
+    """
+
     expense: Expense = Expense.query.get_or_404(expense_id)
 
     if request.method == "POST":
-        description: str = (request.form["description"] or "").strip()
-        amount_str: str = (request.form["amount"] or "").strip()
-        category: str = (request.form["category"] or "").strip()
-        expense_date: str = (request.form["date"] or "").strip()
 
-        if not description or not amount_str or not category or not expense_date:
+        description: str = (
+            request.form["description"] or ""
+        ).strip()
+
+        amount_str: str = (
+            request.form["amount"] or ""
+        ).strip()
+
+        category: str = (
+            request.form["category"] or ""
+        ).strip()
+
+        expense_date: str = (
+            request.form["date"] or ""
+        ).strip()
+
+        # Validate required fields
+        if (
+            not description
+            or not amount_str
+            or not category
+            or not expense_date
+        ):
             flash("All fields are required!", "error")
-            return redirect(url_for("edit_expense", expense_id=expense.id))
 
+            return redirect(
+                url_for(
+                    "edit_expense",
+                    expense_id=expense.id,
+                )
+            )
+
+        # Validate amount
         try:
             amount: float = float(amount_str)
 
             if amount <= 0:
                 flash("Amount must be positive.", "error")
-                return redirect(url_for("edit_expense", expense_id=expense.id))
+
+                return redirect(
+                    url_for(
+                        "edit_expense",
+                        expense_id=expense.id,
+                    )
+                )
 
         except ValueError:
             flash("Invalid amount.", "error")
-            return redirect(url_for("edit_expense", expense_id=expense.id))
 
-        date_parsed: date | None = parse_date_or_none(expense_date)
+            return redirect(
+                url_for(
+                    "edit_expense",
+                    expense_id=expense.id,
+                )
+            )
+
+        # Validate date
+        date_parsed: date | None = parse_date_or_none(
+            expense_date
+        )
 
         if not date_parsed:
             flash("Invalid date.", "error")
-            return redirect(url_for("edit_expense", expense_id=expense.id))
 
+            return redirect(
+                url_for(
+                    "edit_expense",
+                    expense_id=expense.id,
+                )
+            )
+
+        # Validate category
         if category not in CATEGORIES:
             flash("Invalid category selected.", "error")
-            return redirect(url_for("edit_expense", expense_id=expense.id))
 
+            return redirect(
+                url_for(
+                    "edit_expense",
+                    expense_id=expense.id,
+                )
+            )
+
+        # Update expense
         expense.description = description
         expense.amount = amount
         expense.category = category
@@ -301,6 +469,7 @@ def edit_expense(expense_id: int) -> str | Response:
         db.session.commit()
 
         flash("Expense updated successfully!", "success")
+
         return redirect(url_for("index"))
 
     return render_template(
